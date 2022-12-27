@@ -43,9 +43,20 @@ app.MapPost("createQuestion", (StackOverflowContext db) =>
         Body = "Cos tam cos tam",
         DateCreated = DateTime.UtcNow,
         Title = "Zapytanie",
-        Votes = 0
+        Votes = 0,
     };
+    
     db.Add(question);
+    db.SaveChanges();
+});
+
+app.MapPut("tagsToQuestionAttached", (StackOverflowContext db) =>
+{
+    var quesiton = db.Questions.First(question => question.Id == 62);
+    var tags = db.Tags.Take(5);
+
+    quesiton.Tags = tags.ToList();
+    db.Questions.Update(quesiton);
     db.SaveChanges();
 });
 
