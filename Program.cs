@@ -56,7 +56,7 @@ app.MapPut("tagsToQuestionAttached", (StackOverflowContext db) =>
 
 app.MapPost("createAnwserToQuesion", (StackOverflowContext db) =>
 {
-    var question = dbContext.Questions.First(q => q.Id == 1);
+    var question = db.Questions.First(q => q.Id == 1);
     var anwser = new Answer
     {
         AuthorId = 3,
@@ -71,7 +71,7 @@ app.MapPost("createAnwserToQuesion", (StackOverflowContext db) =>
 
 app.MapPost("IncreaseVoteToQuestion", (StackOverflowContext db) =>
 {
-    var question = dbContext.Questions.First(q => q.AuthorId == 2);
+    var question = db.Questions.First(q => q.AuthorId == 2);
     question.Votes += 1;
     db.Update(question);
     db.SaveChanges();
@@ -80,7 +80,7 @@ app.MapPost("IncreaseVoteToQuestion", (StackOverflowContext db) =>
 
 app.MapPost("IncreaseVoteToAnswer", (StackOverflowContext db) =>
 {
-    var anwser = dbContext.Answers.First(q => q.AuthorId == 6);
+    var anwser = db.Answers.First(q => q.AuthorId == 6);
     anwser.Votes += 1;
     db.Update(anwser);
     db.SaveChanges();
@@ -89,13 +89,13 @@ app.MapPost("IncreaseVoteToAnswer", (StackOverflowContext db) =>
 
 app.MapPut("VoteTrying", (StackOverflowContext db) =>
 {
-    var vote = dbContext.Votes.FirstOrDefault(vote => vote.Id == 1);
+    var vote = db.Votes.FirstOrDefault(vote => vote.Id == 1);
 
     if (vote != null)
     {
         try
         {
-            var hasUserVoted = dbContext.Votes.Any(v => v.UserId == vote.UserId && v.EntityId == vote.Id);
+            var hasUserVoted = db.Votes.Any(v => v.UserId == vote.UserId && v.EntityId == vote.Id);
             if (hasUserVoted)
             {
                 throw new Exception("You already voted");
