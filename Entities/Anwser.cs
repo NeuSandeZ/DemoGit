@@ -1,5 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace StackOverflowProject.Entities;
 
 public class Answer : Entity
